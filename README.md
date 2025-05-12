@@ -96,3 +96,31 @@ Follow these steps to set up the project locally:
 ```bash
 git clone https://github.com/odlemon/pine-fluent.git
 cd pine-fluent
+
+# Install all dependencies
+npm install
+
+# Create .env file
+touch .env
+
+# Add the following content to the .env file
+echo 'DATABASE_URL="mysql://username:password@localhost:3306/pine_fluent_db"
+PORT=3000
+JWT_SECRET="your-secret-key-here"
+JWT_EXPIRES_IN="24h"' > .env
+
+# Create MySQL database
+mysql -u root -p -e "CREATE DATABASE pine_fluent_db;"
+
+# Generate Prisma client
+npx prisma generate
+
+# Run database migrations
+npx prisma migrate dev --name init
+
+# Compile TypeScript
+npm run build
+
+# Start the server with hot-reloading
+npm run dev
+
